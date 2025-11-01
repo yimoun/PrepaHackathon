@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers  #Gère les routes automatiques pour les ViewSets.
 
-from prepa_Auth_app import views
+from . import views
 
 
 # Seulement pour modifier le nom du router (Api Root --> Api Auth)
@@ -19,8 +19,8 @@ class AuthRouter(routers.DefaultRouter):
 router = AuthRouter()
 
 # Appeler en POST
-router.register(r'token', views.TokenViewSet,basename='token')  # Connexion et récupération des tokens(access et refresh).
-router.register(r'token-refresh', views.TokenRefreshViewSet,basename='token-refresh')  # Rafraîchissement du access token avec refresh.
+router.register(r'token', views.TokenViewSet, basename='token')  # Connexion et récupération des tokens(access et refresh).
+router.register(r'token-refresh', views.TokenRefreshViewSet, basename='token-refresh')  # Rafraîchissement du access token avec refresh.
 # Ces routes utilisent des ViewSets, ce qui signifie que Django génère automatiquement les endpoints
 # pour ces actions contrairement au routes manuelles déclarées ci-dessous.
 

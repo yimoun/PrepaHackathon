@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # Create your views here.
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -10,10 +8,10 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from prepa_Auth_app.utils import verify_recaptcha
+from .utils import verify_recaptcha
 
 
-from prepa_Auth_app.Serializers import \
+from .Serializers import \
   UserSerializer, \
   UserPasswordSerializer, \
   RegisterSerializer, \
@@ -70,9 +68,9 @@ class RegisterView(APIView):
   http_method_names = ['post']
 
   def post(self, request):
-    recaptcha_token = request.data.get("recaptcha_token")
-    if not verify_recaptcha(recaptcha_token):
-        return Response({"error": "reCAPTCHA invalide"}, status=status.HTTP_400_BAD_REQUEST)
+    #recaptcha_token = request.data.get("recaptcha_token")
+    #if not verify_recaptcha(recaptcha_token):
+        #return Response({"error": "reCAPTCHA invalide"}, status=status.HTTP_400_BAD_REQUEST)
 
     username = request.data['username']
     existing_user = User.objects.filter(username=username).first()
