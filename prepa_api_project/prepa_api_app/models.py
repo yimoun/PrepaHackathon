@@ -85,7 +85,7 @@ class Alerte(models.Model):
         ('CRITIQUE', 'Critique'),
     ]
 
-    employee = models.ForeignKey(Employe,on_delete=models.CASCADE,related_name='alertes',verbose_name="Employé")
+    employe = models.ForeignKey(Employe,on_delete=models.CASCADE,related_name='alertes',verbose_name="Employé")
     modeleIA = models.ForeignKey(ModeleIA,on_delete=models.CASCADE,related_name='alertes',verbose_name="Modèle IA")
     typeEpiManquants = models.CharField(max_length=500, verbose_name="EPI manquants")
     image = models.ImageField(upload_to='alertes/%Y/%m/%d/', verbose_name="Image")

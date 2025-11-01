@@ -122,8 +122,9 @@ class AlerteInlineModeleIA(admin.TabularInline):
     """Inline pour afficher les alertes d'un modèle IA"""
     model = Alerte
     extra = 0
-    fields = ['employee', 'statut', 'niveau', 'created_at']
-    readonly_fields = ['employee', 'statut', 'niveau', 'created_at']
+     # utiliser une callable qui résout employee / employe selon le modèle
+    fields = ['employee_display', 'statut', 'niveau', 'created_at']
+    readonly_fields = ['employee_display', 'statut', 'niveau', 'created_at']
     max_num = 10
     can_delete = False
     verbose_name = "Alerte générée"
@@ -132,6 +133,31 @@ class AlerteInlineModeleIA(admin.TabularInline):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.order_by('-created_at')[:10]
+
+    def employee_display(self, obj):
+        emp = getattr(obj, 'employee', None) or getattr(obj, 'employe', None)
+        if not emp:
+            return "—"
+        # adaptation simple : nom + prénom si disponibles
+        name = getattr(emp, 'name', None) or getattr(emp, 'nom', None) or str(emp)
+        surname = getattr(emp, 'surname', None) or getattr(emp, 'prenom', None) or ''
+        return f"{name} {surname}".strip()
+    employee_display.short_description = 'Employé'
+
+    readonly_fields = [
+        'created_at',
+        'image_large',
+        'employee_display',
+        'modeleIA',
+        'analyse_details'
+        'created_at',
+        'image_large',
+        'employee_display',
+        'modeleIA',
+        'analyse_details'
+        ]
+
+ 
 
 
 # ============================================================================
