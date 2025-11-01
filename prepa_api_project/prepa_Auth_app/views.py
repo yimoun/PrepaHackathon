@@ -59,7 +59,7 @@ class CurrentUserPasswordView(APIView):
     user = User.objects.get(pk=request.user.pk)
     serializer = UserPasswordSerializer(user, data=request.data, context={'request': request})
     serializer.is_valid(raise_exception=True)
-    updated_user = serializer.save()
+    updated_user = serializer.save() # est ce que c'est pas update à la place de save ?
 
     user_serializer = UserSerializer(updated_user, context={'request': request})
     return Response(user_serializer.data, status=status.HTTP_200_OK)
